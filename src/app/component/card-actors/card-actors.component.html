@@ -1,0 +1,11 @@
+<div class="card mb-4">
+<img class="listing-photo" [src]="actorFromList.img | poster">
+<p >Nombre: {{actorFromList.first_name}}</p>
+<p >Apellido: {{actorFromList.last_name}}</p>
+<p >Sexo: {{ actorFromList.gender == 'Male' ? 'M' : 'F' }}</p>
+<p >Fecha de nacimiento: {{actorFromList.birthdate}}</p>
+<p >Lugar de nacimiento: {{actorFromList.bornCity}}</p>
+<div class="movies">
+  <p >Peliculas: </p>
+  <p class="list-inline-item" *ngFor="let movies of actorFromList.movies">{{movies}}</p>
+</div>

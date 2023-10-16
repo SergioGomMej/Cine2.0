@@ -1,0 +1,13 @@
+<div class="card mb-4 m-2">
+  <h5 class="card-title text-primary">{{ movieFromList.title }}</h5>
+  <a routerLink="details/{{movieFromList.id}}">
+    <img class="card-img-top img-fluid w-100 h-100" [src]="movieFromList!.poster | poster">
+    <div class="card-body">
+      <div class="genre">
+        <p class="list-inline-item bg-primary rounded text-white mr-5" *ngFor="let genre of movieFromList.genre">
+          {{ genre }}
+        </p>
+      </div>
+    </div>
+  </a>
+</div>

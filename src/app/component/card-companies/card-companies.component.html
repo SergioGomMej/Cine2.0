@@ -1,0 +1,17 @@
+<div class="card mb-4">
+  <h2 class="listing-heading">{{ estudioFromList.name }}</h2>
+  <p class="detalle">Ciudad: {{ estudioFromList.country }}</p>
+  <div *ngIf="estudioFromList.createYear < 2000; else noCamera">
+    <p>Año de creación:<i class="bi bi-camera-reels">{{estudioFromList.createYear}}</i></p>
+  </div>
+  <ng-template #noCamera>
+    <div><p>Año de creación: {{estudioFromList.createYear}}</p></div>
+  </ng-template>
+  <i class="bi bi-file-earmark-person">{{ estudioFromList.employees }}</i>
+  <star-rating class="d-flex justify-content-start mt-2" [rating]="estudioFromList.rating " [readOnly]="true" [starType]="'svg'"></star-rating>
+  <div class="movies">
+    <p class="listing-movies" *ngFor="let movies of estudioFromList.movies">
+      {{ movies }}
+    </p>
+  </div>
+</div>

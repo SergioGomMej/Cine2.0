@@ -1,0 +1,86 @@
+<div
+  class="d-flex flex-column justify-content-center align-items-center vh-100 bg-secondary"
+  *ngIf="loading"
+>
+  <p-progressSpinner></p-progressSpinner>
+  <p class="mt-2">Cargando...</p>
+</div>
+
+<!-- <div class="row justify-content-center" *ngIf="!searchMovies; else Buscador">
+  <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let movie of movies">
+    <app-card-movies [movieFromList]="movie"></app-card-movies>
+  </div>
+</div>
+<ng-template #Buscador>
+  <div class="row justify-content-center">
+  <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let movie of searchMovies">
+    <app-card-movies [movieFromList]="movie"></app-card-movies>
+  </div>
+</div>
+</ng-template> -->
+
+<div class="row justify-content-center">
+  <div class="ml-3">
+    <app-search-pages (searchMovie)="buscador($event)"></app-search-pages>
+  </div>
+</div>
+
+<div class="container">
+  <ng-container *ngIf="searchMovies.length == 1; else noCompleteMovie">
+    <div class="row justify-content-center">
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let movie of searchMovies">
+        <app-card-movies [movieFromList]="movie"></app-card-movies>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #noCompleteMovie >
+    <div class="row justify-content-center">
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let movie of movies">
+        <app-card-movies [movieFromList]="movie"></app-card-movies>
+      </div>
+    </div>
+  </ng-template>
+</div>
+
+
+<div class="row justify-content-center" *ngIf="!loading">
+  <a>
+    <button routerLink="add" class="btn btn-primary m-2">
+      Añadir película
+    </button>
+  </a>
+
+  <nav aria-label="Page navigation example" class="mt-2">
+    <ul class="pagination">
+      <li class="page-item">
+        <a
+          class="page-link"
+          href="#"
+          (click)="prevPage(); $event.preventDefault()"
+          [class.disabled]="currentPage === 1"
+          >Previous</a
+        >
+      </li>
+      <ng-container *ngFor="let page of pageNumbers">
+        <li class="page-item">
+          <a
+            class="page-link"
+            href="#"
+            (click)="pageSelected(page); $event.preventDefault()"
+            >{{ page }}</a
+          >
+        </li>
+      </ng-container>
+      <li class="page-item">
+        <a
+          class="page-link"
+          href="#"
+          (click)="nextPage(); $event.preventDefault()"
+          [class.disabled]="movies.length < itemsPage"
+          >Next</a
+        >
+      </li>
+    </ul>
+  </nav>
+</div>

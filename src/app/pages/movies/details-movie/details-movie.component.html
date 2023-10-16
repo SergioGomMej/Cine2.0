@@ -1,0 +1,104 @@
+<div class="d-flex flex-column justify-content-center align-items-center vh-100 bg-secondary" *ngIf="loading">
+  <p-progressSpinner></p-progressSpinner>
+  <p class="mt-2">Cargando...</p>
+</div>
+<div>
+  <div class="container" *ngIf="!loading">
+    <div class="title">
+      <div class="container text-center">
+        <h2>{{ movieDetails.title }}</h2>
+        <img class="photo" [src]="movieDetails.poster | poster" />
+        <div class="d-flex justify-content-center">
+        <table class="text-center">
+          <tbody>
+            <tr>
+              <td>Puntuación:</td>
+              <td class="list-inline-item">{{ movieDetails.imdbRating }}</td>
+            </tr>
+            <tr>
+              <td>Duración:</td>
+              <td  class="list-inline-item">{{ movieDetails.duration | duration }}</td>
+            </tr>
+            <tr>
+              <td>Actores:</td>
+              <!-- <td *ngFor="let actor of actorsName">
+                {{ actor.nombre_completo }}
+              </td> -->
+              <td *ngIf="actorsName && actorsName.length > 0; else noArray">
+                <div class="list-inline-item" *ngFor="let actor of actorsName">{{ actor.nombre_completo }}</div>
+              </td>
+              <ng-template #noArray>
+                <td>
+                  {{ movieDetails.actors }}
+                </td>
+              </ng-template>
+            </tr>
+            <tr>
+              <td>Género:</td>
+              <td class="list-inline-item" *ngFor="let genre of movieDetails.genre">{{ genre }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      </div>
+      <button
+        type="button"
+        class="btn btn-primary m-2"
+        data-toggle="modal"
+        data-target="#exampleModal"
+      >
+        Eliminar
+      </button>
+
+      <a *ngIf="!loading">
+        <button routerLink="modificar/{{movieDetails.id}}" class="btn btn-primary m-2" >Actualizar película</button>
+      </a>
+
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
+                ¿Desea eliminar la pelicula?
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-dismiss="modal"
+                (click)="eliminarRegistro()"
+              >
+                Si
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                routerLink=""
+                data-dismiss="modal"
+              >
+                No
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

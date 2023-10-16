@@ -1,0 +1,117 @@
+<div class="d-flex flex-column justify-content-center align-items-center vh-100 bg-secondary" *ngIf="loading">
+  <p-progressSpinner></p-progressSpinner>
+  <p class="mt-2">Cargando...</p>
+</div>
+<form class="container mt-4 bg-light" [formGroup]="addForm" *ngIf="!loading">
+  <!-- *ngIf="!loading" -->
+
+    <div class="form-group">
+      <label for="titulo" class="mt-2">Titulo:</label>
+      <br>
+      <input type="text" class="form-control" id="title" formControlName="title" [value]="movies.title" required>
+        <div *ngIf="addForm.get('title')?.touched && addForm.get('title')?.errors && addForm.get('title')?.hasError('required')" class="alert alert-danger">
+          Este campo es obligatorio
+        </div>
+        <div *ngIf="addForm.get('title')?.touched && addForm.get('title')?.errors && addForm.get('title')?.hasError('pattern')" class="alert alert-danger">
+          El título debe terminar con "PELICULA AÑADIDA".
+        </div>
+    </div>
+
+
+    <div class="form-group">
+      <label for="poster">Poster (url):</label>
+      <br>
+      <input type="url" class="form-control" id="poster" formControlName="poster"  pattern="^(https?|ftp)://[^\s/$.?#].[^\s]*\.png$" [value]="movies.poster" required>
+      <div *ngIf="addForm.get('poster')?.touched && addForm.get('poster')?.hasError('required')" class="alert alert-danger">
+          Este campo es obligatorio
+        </div>
+        <div *ngIf="addForm.get('poster')?.hasError('pattern') && addForm.get('poster')?.touched" class="alert alert-danger">
+          Introduce una url válida, solo permite formato png.
+        </div>
+      </div>
+
+
+    <div class="form-group">
+      <label for="generos">Géneros:</label>
+      <br>
+      <select type="text" class="form-control" id="genre" formControlName="genre" multiple required>
+        <option *ngFor=" let genre of listGenre">{{genre}}</option>
+      </select>
+      <div *ngIf="addForm.get('genre')?.touched && addForm.get('genre')?.errors?.['required']" class="alert alert-danger">
+        Este campo es obligatorio
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="actores">Actores:</label>
+      <br>
+      <select type="text" class="form-control" id="actor" formControlName="actors" multiple required>
+        <option *ngFor=" let actor of nameActors">{{actor}}</option>
+      </select>
+      <div *ngIf="addForm.get('actors')?.touched && addForm.get('actors')?.errors?.['required']" class="alert alert-danger">
+        Este campo es obligatorio
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="estudio">Estudio:</label>
+      <br>
+      <select type="text" class="form-control" id="estudio" multiple formControlName="estudio" required>
+        <option *ngFor=" let estudio of nameEstudios">{{estudio}}</option>
+      </select>
+      <div *ngIf="addForm.get('estudio')?.touched && addForm.get('estudio')?.errors?.['required']" class="alert alert-danger">
+        Este campo es obligatorio
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label for="anio">Año:</label>
+      <br>
+        <input type="number" class="form-control" id="year" formControlName="year" [value]="movies.year" required>
+        <div *ngIf="addForm.get('year')?.touched && addForm.get('year')?.errors?.['required']" class="alert alert-danger">
+          Este campo es obligatorio
+        </div>
+        <div *ngIf="addForm.get('year')?.touched && addForm.get('year')?.errors?.['min']" class="alert alert-danger">
+          Este campo tiene como valor minimo 2000
+        </div>
+    </div>
+
+
+    <div class="form-group">
+      <label for="duration">Duración (min):</label>
+      <br>
+      <input type="number" class="form-control" id="duration" formControlName="duration" [value]="movies.duration" required>
+      <div *ngIf="addForm.get('duration')?.touched && addForm.get('duration')?.errors?.['required']" class="alert alert-danger">
+        Este campo es obligatorio
+      </div>
+      <div *ngIf="addForm.get('duration')?.touched && addForm.get('duration')?.errors?.['min']" class="alert alert-danger">
+        Este campo tiene que tener valor positivo.
+      </div>
+    </div>
+
+
+
+    <div class="form-group">
+      <label for="puntacion">Puntuación:</label>
+      <br>
+      <input type="number" class="form-control" id="imdbRating" formControlName="imdbRating" [value]="movies.imdbRating" required>
+      <div *ngIf="addForm.get('imdbRating')?.touched && addForm.get('imdbRating')?.errors?.['required']" class="alert alert-danger">
+        Este campo es obligatorio
+      </div>
+      <div *ngIf="addForm.get('imdbRating')?.touched && addForm.get('imdbRating')?.errors?.['min']" class="alert alert-danger">
+        Este campo tiene que tener valor positivo.
+      </div>
+      <div *ngIf="addForm.get('imdbRating')?.touched && addForm.get('imdbRating')?.errors?.['max']" class="alert alert-danger">
+        Este campo tiene como valor maximo 10.
+      </div>
+    </div>
+
+    <div>
+      <div *ngIf="movies.title === '' else actualizar">
+        <button type="submit" class="btn btn-primary mb-2" (click)="addMoviesForm(addForm)" [disabled]="addForm.invalid">Añadir</button>
+      </div>
+      <ng-template #actualizar>
+        <button type="submit" class="btn btn-primary mb-2" (click)="updateMoviesForm(addForm)" [disabled]="addForm.invalid">Actualizar</button>
+      </ng-template>
+      </div>
+
+</form>

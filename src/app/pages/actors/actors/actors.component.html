@@ -1,0 +1,12 @@
+<div class="d-flex flex-column justify-content-center align-items-center vh-100 bg-secondary" *ngIf="loading">
+  <p-progressSpinner></p-progressSpinner>
+  <p class="mt-2">Cargando...</p>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let actor of actors">
+      <app-card-actors [actorFromList]="actor"></app-card-actors>
+    </div>
+  </div>
+</div>
+
